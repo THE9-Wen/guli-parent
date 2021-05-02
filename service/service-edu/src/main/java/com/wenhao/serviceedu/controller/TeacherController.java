@@ -1,6 +1,7 @@
 package com.wenhao.serviceedu.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.wenhao.commonbase.exception.MyException;
 import com.wenhao.commonutils.R;
 import com.wenhao.serviceedu.entity.Teacher;
 import com.wenhao.serviceedu.entity.vo.TeacherQuery;
@@ -35,8 +36,12 @@ public class TeacherController {
     @ApiOperation(value = "列出所有老师")
     @GetMapping("/list")
     public R list(){
-        List<Teacher> list = teacherService.list(null);
-        return R.ok().data("teachers", list);
+        try {
+            List<Teacher> list = teacherService.list(null);
+            return R.ok().data("teachers", list);
+        }catch (Exception e){
+            throw new MyException(20001,"出现算数异常");
+        }
     }
 
     //讲师的逻辑删除功能
@@ -45,7 +50,11 @@ public class TeacherController {
             @ApiParam(name = "id", value = "讲师ID", required = true)
             @PathVariable("id") String id){
         boolean res = teacherService.removeById(id);
-        return R.ok().data("result",res);
+        if (res) {
+            return R.ok();
+        } else {
+            return R.error().message("删除失败");
+        }
     }
 
     @ApiOperation(value = "分页讲师列表,可以添加条件")
@@ -55,12 +64,12 @@ public class TeacherController {
             @PathVariable("page") Long page,
             @ApiParam(name = "limit", value = "每页记录数", required = true)
             @PathVariable("limit") Long limit,
-            @ApiParam(name = "teacherQuery", value = "查询对象", required = false)
+            @ApiParam(name = "teacherQuery", value = "查询对象", required = true)
                     TeacherQuery teacherQuery){
         Page<Teacher> pageParam = new Page<>(page,limit);
         teacherService.pageQuery(pageParam, teacherQuery);
         List<Teacher> records = pageParam.getRecords();
-        long total = records.size();
+        long total = pageParam.getTotal();
         return R.ok().data("total", total).data("rows", records);
     }
 
@@ -68,14 +77,19 @@ public class TeacherController {
     @PostMapping
     public R save(@ApiParam(name = "teacher", value = "教师对象", required = true)
                   @RequestBody Teacher teacher){
-        teacherService.save(teacher);
+        Teacher reAdd = teacherService.getByName(teacher.getName());
+        if (reAdd == null) teacherService.save(teacher);
+        else {
+            reAdd.setIsDeleted(0);
+            teacherService.updateById(reAdd);
+        }
         return R.ok();
     }
 
     @ApiOperation(value = "根据id查询")
-    @GetMapping("{id")
+    @GetMapping("{id}")
     public R getById(@ApiParam(name = "id", value = "id", required = true)
-                                 String id){
+                     @PathVariable String id){
         Teacher teacher = teacherService.getById(id);
         return R.ok().data("teacher",teacher);
     }

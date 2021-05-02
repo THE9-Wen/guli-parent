@@ -53,4 +53,11 @@ public class TeacherServiceImpl extends ServiceImpl<TeacherMapper, Teacher> impl
 
         baseMapper.selectPage(pageParam,teacherQueryWrapper);
     }
+
+    @Override
+    public Teacher getByName(String name) {
+        QueryWrapper<Teacher> teacherQueryWrapper = new QueryWrapper<>();
+        teacherQueryWrapper.eq("name",name);
+        return baseMapper.selectOne(teacherQueryWrapper);
+    }
 }

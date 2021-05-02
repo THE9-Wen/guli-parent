@@ -13,6 +13,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>service-edu</module>
+        <module>service-oss</module>
     </modules>
 
     <dependencies>
@@ -136,6 +137,18 @@
             <artifactId>spring-boot-devtools</artifactId>
             <optional>true</optional> <!-- 这个需要为 true 热部署才有效 -->
         </dependency>
+
+        <dependency>
+            <groupId>com.wenhao</groupId>
+            <artifactId>common-util</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.wenhao</groupId>
+            <artifactId>common-base</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
     </dependencies>
 
     <build>

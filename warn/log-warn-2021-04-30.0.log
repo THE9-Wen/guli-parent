@@ -1,0 +1,1 @@
+2021-04-30 17:37:18.272 [http-nio-8001-exec-10] WARN  o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - Resolved [MyException{code=20001, msg='出现算数异常'}]

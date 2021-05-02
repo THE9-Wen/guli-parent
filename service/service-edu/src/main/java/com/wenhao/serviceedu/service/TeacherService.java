@@ -17,4 +17,5 @@ public interface TeacherService extends IService<Teacher> {
 
     void pageQuery(Page<Teacher> pageParam, TeacherQuery teacherQuery);
 
+    Teacher getByName(String name);
 }
