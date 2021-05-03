@@ -5,10 +5,20 @@ import com.alibaba.excel.analysis.ExcelReadExecutor;
 import com.alibaba.excel.context.AnalysisContext;
 import com.alibaba.excel.event.AnalysisEventListener;
 import com.alibaba.excel.read.metadata.ReadSheet;
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.wenhao.serviceedu.entity.ExcelSubject;
+import com.wenhao.serviceedu.entity.Subject;
+import com.wenhao.serviceedu.entity.Teacher;
 import com.wenhao.serviceedu.entity.vo.ExcelSubjectListener;
+import com.wenhao.serviceedu.entity.vo.SubjectNestedVo;
+import com.wenhao.serviceedu.entity.vo.SubjectVo;
 import com.wenhao.serviceedu.mapper.SubjectMapper;
+import com.wenhao.serviceedu.mapper.TeacherMapper;
 import com.wenhao.serviceedu.service.SubjectService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfigureOrder;
 import org.springframework.stereotype.Service;
@@ -17,7 +27,11 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Wenhao Tong
@@ -25,7 +39,7 @@ import java.util.List;
  * @create 2021-05-02 22:48
  */
 @Service
-public class SubjectServiceImpl implements SubjectService {
+public class SubjectServiceImpl extends ServiceImpl<SubjectMapper, Subject> implements SubjectService {
 
     @Autowired
     private SubjectMapper subjectMapper;
@@ -48,6 +62,41 @@ public class SubjectServiceImpl implements SubjectService {
                 }
             }
         }
+    }
 
+    @Override
+    public List<SubjectNestedVo> nestedList() {
+
+        List<SubjectNestedVo> list = new ArrayList<>();
+
+        QueryWrapper<Subject> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("parent_id", "0");
+        queryWrapper.orderByAsc("sort", "id");
+        List<Subject> oneSubjects = subjectMapper.selectList(queryWrapper);
+
+        QueryWrapper<Subject> queryWrapper2 = new QueryWrapper<>();
+        queryWrapper2.ne("parent_id", "0");
+        queryWrapper.orderByAsc("sort", "id");
+        List<Subject> twoSubjects = subjectMapper.selectList(queryWrapper2);
+
+        int count = oneSubjects.size();
+        for (int i = 0; i < count; i++) {
+            Subject subject = oneSubjects.get(i);
+
+            SubjectNestedVo subjectNestedVo = new SubjectNestedVo();
+            BeanUtils.copyProperties(subject, subjectNestedVo);
+            list.add(subjectNestedVo);
+
+            int count2 = twoSubjects.size();
+            for (int j = 0; j < count2; j++) {
+                Subject subSubject = twoSubjects.get(j);
+                if (subject.getId().equals(subSubject.getParentId())){
+                    SubjectVo subjectVo = new SubjectVo();
+                    BeanUtils.copyProperties(subSubject, subjectVo);
+                    list.get(i).getChildren().add(subjectVo);
+                }
+            }
+        }
+        return list;
     }
 }
