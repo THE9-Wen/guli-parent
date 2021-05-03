@@ -7,7 +7,7 @@ spring:
     active: dev
 oss:
   endpoint: oss-cn-shenzhen.aliyuncs.com
-  keyid: LTAI5t7YSt1EJ376zRpHAFfs #填写刚刚生成的AccessKey
-  keysecret: kR5QoDnuAPWAFc996mwQN6c2h1k5k0  # 填写刚刚生成的Accesssecret
+  keyid:  #填写刚刚生成的AccessKey
+  keysecret:   # 填写刚刚生成的Accesssecret
   bucketname: edu-wenhao # bucket名称
   filehost: avatar    #bucket下文件夹的路径
