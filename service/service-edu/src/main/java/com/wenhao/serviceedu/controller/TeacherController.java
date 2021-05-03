@@ -78,7 +78,12 @@ public class TeacherController {
     public R save(@ApiParam(name = "teacher", value = "教师对象", required = true)
                   @RequestBody Teacher teacher){
         Teacher reAdd = teacherService.getByName(teacher.getName());
-        if (reAdd == null) teacherService.save(teacher);
+        if (reAdd == null) {
+            if (teacher.getAvatar() == null) {
+                teacher.setAvatar("https://edu-wenhao.oss-cn-shenzhen.aliyuncs.com/avatar/default.jfif");
+            }
+            teacherService.save(teacher);
+        }
         else {
             reAdd.setIsDeleted(0);
             teacherService.updateById(reAdd);
