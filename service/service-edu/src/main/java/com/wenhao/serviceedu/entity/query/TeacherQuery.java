@@ -1,4 +1,4 @@
-package com.wenhao.serviceedu.entity.vo;
+package com.wenhao.serviceedu.entity.query;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

@@ -1,4 +1,4 @@
-package com.wenhao.serviceedu.entity.vo;
+package com.wenhao.serviceedu.entity.excel;
 
 import com.alibaba.excel.context.AnalysisContext;
 import com.alibaba.excel.event.AnalysisEventListener;

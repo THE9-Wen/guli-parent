@@ -3,7 +3,7 @@ package com.wenhao.serviceedu.service;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.wenhao.serviceedu.entity.Teacher;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.wenhao.serviceedu.entity.vo.TeacherQuery;
+import com.wenhao.serviceedu.entity.query.TeacherQuery;
 
 /**
  * <p>

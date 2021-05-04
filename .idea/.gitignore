@@ -7,6 +7,8 @@
 # Editor-based HTTP Client requests
 /httpRequests/
 
+
+
 HELP.md
 target/
 !.mvn/wrapper/maven-wrapper.jar
@@ -27,6 +29,7 @@ target/
 *.iws
 *.iml
 *.ipr
+*.log
 
 ### NetBeans ###
 /nbproject/private/

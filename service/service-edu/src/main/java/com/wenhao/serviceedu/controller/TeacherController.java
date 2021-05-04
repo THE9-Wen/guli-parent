@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.wenhao.commonbase.exception.MyException;
 import com.wenhao.commonutils.R;
 import com.wenhao.serviceedu.entity.Teacher;
-import com.wenhao.serviceedu.entity.vo.TeacherQuery;
+import com.wenhao.serviceedu.entity.query.TeacherQuery;
 import com.wenhao.serviceedu.service.TeacherService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -12,7 +12,6 @@ import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.Wrapper;
 import java.util.List;
 
 /**
@@ -77,17 +76,7 @@ public class TeacherController {
     @PostMapping
     public R save(@ApiParam(name = "teacher", value = "教师对象", required = true)
                   @RequestBody Teacher teacher){
-        Teacher reAdd = teacherService.getByName(teacher.getName());
-        if (reAdd == null) {
-            if (teacher.getAvatar() == null) {
-                teacher.setAvatar("https://edu-wenhao.oss-cn-shenzhen.aliyuncs.com/avatar/default.jfif");
-            }
-            teacherService.save(teacher);
-        }
-        else {
-            reAdd.setIsDeleted(0);
-            teacherService.updateById(reAdd);
-        }
+        teacherService.save(teacher);
         return R.ok();
     }
 
