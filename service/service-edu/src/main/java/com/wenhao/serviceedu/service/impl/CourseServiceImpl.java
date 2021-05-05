@@ -43,24 +43,14 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
         }
 
         String title = courseQuery.getTitle();
-        String teacherId = courseQuery.getTeacherId();
-        String subjectId = courseQuery.getSubjectId();
-        String subjectParentId = courseQuery.getSubjectParentId();
+        String status = courseQuery.getStatus();
 
         if (title != null) {
             courseQueryWrapper.like("title",title);
         }
 
-        if (teacherId != null) {
-            courseQueryWrapper.eq("teacher_id",teacherId);
-        }
-
-        if (subjectId != null) {
-            courseQueryWrapper.eq("subject_id",subjectId);
-        }
-
-        if (subjectParentId != null) {
-            courseQueryWrapper.eq("subject_parent_id",subjectParentId);
+        if (status != null) {
+            courseQueryWrapper.eq("status",status);
         }
 
         courseMapper.selectMapsPage(pageParam, courseQueryWrapper);

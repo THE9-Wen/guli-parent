@@ -18,15 +18,12 @@ import java.util.Date;
 @Data
 public class CourseQuery implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+
     @ApiModelProperty(value = "课程标题,模糊查询")
     private String title;
 
-    @ApiModelProperty(value = "课程讲师ID")
-    private String teacherId;
+    @ApiModelProperty(value = "课程状态 Draft未发布  Normal已发布")
+    private String status;
 
-    @ApiModelProperty(value = "课程专业ID")
-    private String subjectId;
-
-    @ApiModelProperty(value = "课程专业父级ID")
-    private String subjectParentId;
 }

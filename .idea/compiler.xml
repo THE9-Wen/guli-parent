@@ -11,6 +11,7 @@
         <module name="service-oss" />
         <module name="service-edu" />
         <module name="common-base" />
+        <module name="service-vod" />
       </profile>
     </annotationProcessing>
   </component>
