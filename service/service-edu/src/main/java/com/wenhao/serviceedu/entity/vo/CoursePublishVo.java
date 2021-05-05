@@ -1,6 +1,7 @@
 package com.wenhao.serviceedu.entity.vo;
 
 import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -28,4 +29,6 @@ public class CoursePublishVo implements Serializable {
     private String teacher;
 
     private String price;
+
+
 }

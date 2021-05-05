@@ -37,31 +37,31 @@ public class VideoController {
     }
 
     @ApiOperation("编辑小节")
-    @PutMapping("{id}")
+    @PutMapping("/{id}")
     public R addChapter(
             @ApiParam(name = "video",value = "小节信息",required = true)
             @RequestBody Video video,
             @ApiParam(name = "videoId",value = "小节ID",required = true)
-            @PathVariable String id){
+            @PathVariable("id") String id){
         video.setId(id);
         boolean update = videoService.updateById(video);
         return R.ok();
     }
 
     @ApiOperation("删除小节")
-    @DeleteMapping("{id}")
+    @DeleteMapping("/{id}")
     public R removeChapter(
-            @ApiParam(name = "videoId",value = "小节ID",required = true)
-            @PathVariable String id){
-        videoService.removeById(id);
+            @ApiParam(name = "id",value = "小节ID",required = true)
+            @PathVariable("id") String id){
+        boolean b = videoService.removeVideoById(id);
         return R.ok();
     }
 
     @ApiOperation("根据ID查询小节")
-    @GetMapping("{id}")
+    @GetMapping("/{id}")
     public R getChapterById(
-            @ApiParam(name = "videoId",value = "小节ID",required = true)
-            @PathVariable String id){
+            @ApiParam(name = "id",value = "小节ID",required = true)
+            @PathVariable("id") String id){
         Video video = videoService.getById(id);
         return R.ok().data("video",video);
     }

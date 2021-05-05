@@ -11,8 +11,12 @@ spring:
     multipart:
       max-file-size: 1024MB
       max-request-size: 1024MB
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 10.249.175.123:8848
 aliyun:
   vod:
     file:
-      keyid:  # your accessKeyId
-      keysecret:  # your accessKeySecret
+      keyid: LTAI5tDww5jevWNfu1yqvzrn # your accessKeyId
+      keysecret: m0uZvL7N9EnJPYD2zdA6VdBWA2NaNS # your accessKeySecret

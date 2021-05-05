@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 /**
  * @author Wenhao Tong
  * @Description
@@ -24,7 +26,7 @@ public class VideoAdminController {
     private VideoService videoService;
 
     @ApiOperation("上传视频")
-    @PostMapping("upload")
+    @PostMapping("/upload")
     public R uploadVideo(
             @ApiParam(name = "file", value = "文件", required = true)
             @RequestBody MultipartFile file){
@@ -33,7 +35,7 @@ public class VideoAdminController {
     }
 
     @ApiOperation("删除视频")
-    @PostMapping("{id}")
+    @DeleteMapping("/{id}")
     public R removeVideoById(
             @ApiParam(name = "id", value = "云端视频id", required = true)
             @PathVariable String id){
@@ -41,4 +43,12 @@ public class VideoAdminController {
         return R.ok().message("视频删除成功！");
     }
 
+    @ApiOperation("批量删除视频")
+    @DeleteMapping("/delete-batch")
+    public R removeVideoList(
+            @ApiParam(name = "videoList", value = "需要删除的视频列表", required = true)
+            @RequestBody List<String> videoList){
+        videoService.removeVideoList(videoList);
+        return R.ok().message("视频删除成功！");
+    }
 }

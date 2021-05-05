@@ -5,6 +5,10 @@ spring:
     name: service-oss
   profiles:
     active: dev
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 10.249.175.123:8848
 oss:
   endpoint: oss-cn-shenzhen.aliyuncs.com
   keyid:  #填写刚刚生成的AccessKey

@@ -21,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 
 /**
  * @author Wenhao Tong
@@ -54,17 +55,17 @@ public class VideoServiceImpl implements VideoService {
 
             String videoId = response.getVideoId();
 
-            if (!response.isSuccess()){
+            if (!response.isSuccess()) {
                 String errorMessage = "阿里云上传错误：" + "code：" + response.getCode() + ", message：" + response.getMessage();
                 log.warn(errorMessage);
-                if(StringUtils.isEmpty(videoId)){
+                if (StringUtils.isEmpty(videoId)) {
                     throw new MyException(20001, errorMessage);
                 }
             }
             return videoId;
-            } catch (IOException e) {
-            throw new MyException(20001,"vod 服务上传失败！");
-            } finally {
+        } catch (IOException e) {
+            throw new MyException(20001, "vod 服务上传失败！");
+        } finally {
             if (inputStream != null) {
                 try {
                     inputStream.close();
@@ -87,8 +88,28 @@ public class VideoServiceImpl implements VideoService {
             log.info("RequestId = " + response.getRequestId() + "\n");
         } catch (ClientException e) {
             e.printStackTrace();
+            throw new MyException(20001,"删除视频失败");
         }
+    }
 
+    @Override
+    public void removeVideoList(List<String> videoIdList) {
+        try {
+            DefaultAcsClient client = AliyunVodSDKUtil.initVodClient(
+                    ConstantPropertiesUtil.ACCESS_KEY_ID,
+                    ConstantPropertiesUtil.ACCESS_KEY_SECRET);
+            //创建请求对象
+            //一次只能批量删20个
+            String str = org.apache.commons.lang.StringUtils.join(videoIdList.toArray(), ",");
+            DeleteVideoRequest request = new DeleteVideoRequest();
+            request.setVideoIds(str);
 
+            //获取响应
+            DeleteVideoResponse response = client.getAcsResponse(request);
+            log.info("RequestId = " + response.getRequestId() + "\n");
+        } catch (ClientException e) {
+            e.printStackTrace();
+            throw new MyException(20001,"删除视频失败");
+        }
     }
 }

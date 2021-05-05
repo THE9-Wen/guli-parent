@@ -44,7 +44,7 @@ public class TeacherController {
     }
 
     //讲师的逻辑删除功能
-    @DeleteMapping("{id}")
+    @DeleteMapping("/{id}")
     public R removeById(
             @ApiParam(name = "id", value = "讲师ID", required = true)
             @PathVariable("id") String id){
@@ -57,7 +57,7 @@ public class TeacherController {
     }
 
     @ApiOperation(value = "分页讲师列表,可以添加条件")
-    @GetMapping("{page}/{limit}")
+    @GetMapping("/{page}/{limit}")
     public R pageList(
             @ApiParam(name = "page", value = "当前页码", required = true)
             @PathVariable("page") Long page,
@@ -81,7 +81,7 @@ public class TeacherController {
     }
 
     @ApiOperation(value = "根据id查询")
-    @GetMapping("{id}")
+    @GetMapping("/{id}")
     public R getById(@ApiParam(name = "id", value = "id", required = true)
                      @PathVariable String id){
         Teacher teacher = teacherService.getById(id);
@@ -89,7 +89,7 @@ public class TeacherController {
     }
 
     @ApiOperation(value = "根据id修改")
-    @PutMapping("{id}")
+    @PutMapping("/{id}")
     public R updateById(@ApiParam(name = "id", value = "id", required = true)
                         @PathVariable String id,
                         @ApiParam(name = "teacher", value = "教师对象", required = true)

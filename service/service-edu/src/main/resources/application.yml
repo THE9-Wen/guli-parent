@@ -11,7 +11,23 @@ spring:
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
-
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 10.249.175.123:8848
+    sentinel:
+      transport:
+        port: 8719
+        dashboard: 10.249.175.123:8080
+        clientIp: 10.250.195.174
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+feign:
+  sentinel:
+    enabled: true
 server:
   port: 8001
 mybatis-plus:
@@ -22,3 +38,4 @@ mybatis-plus:
     db-config:
       logic-not-delete-value: 0
       logic-delete-value: 1
+

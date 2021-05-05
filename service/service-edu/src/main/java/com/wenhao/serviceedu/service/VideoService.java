@@ -16,4 +16,8 @@ import java.util.List;
  */
 public interface VideoService extends IService<Video> {
     Integer  getCountByChaprterId(String id);
+
+    boolean removeVideoById(String id);
+
+    boolean removeByCourseId(String courseId);
 }

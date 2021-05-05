@@ -3,6 +3,7 @@ package com.wenhao.serviceedu.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.wenhao.commonbase.exception.MyException;
 import com.wenhao.serviceedu.entity.Chapter;
+import com.wenhao.serviceedu.entity.Course;
 import com.wenhao.serviceedu.entity.Video;
 import com.wenhao.serviceedu.entity.vo.ChapterVo;
 import com.wenhao.serviceedu.entity.vo.VideoVo;
@@ -73,5 +74,14 @@ public class ChapterServiceImpl extends ServiceImpl<ChapterMapper, Chapter> impl
         } else {
             throw new MyException(20001,"该章节还有视频未删除。");
         }
+    }
+
+    @Override
+    public Integer removeByCourseId(String id) {
+        QueryWrapper<Chapter> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("coursr_id",id);
+
+        int delete = chapterMapper.delete(queryWrapper);
+        return delete;
     }
 }

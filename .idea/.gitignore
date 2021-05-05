@@ -41,3 +41,9 @@ build/
 
 ### VS Code ###
 .vscode/
+
+
+../error
+../info
+../warn
+../lib

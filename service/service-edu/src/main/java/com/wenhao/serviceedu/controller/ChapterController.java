@@ -85,7 +85,5 @@ public class ChapterController {
         Chapter chapter = chapterService.getById(id);
         return R.ok().data("chapter",chapter);
     }
-
-
 }
 

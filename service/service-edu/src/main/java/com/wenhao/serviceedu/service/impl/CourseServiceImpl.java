@@ -10,8 +10,10 @@ import com.wenhao.serviceedu.entity.query.CourseQuery;
 import com.wenhao.serviceedu.entity.vo.CoursePublishVo;
 import com.wenhao.serviceedu.mapper.CourseDescriptionMapper;
 import com.wenhao.serviceedu.mapper.CourseMapper;
+import com.wenhao.serviceedu.service.ChapterService;
 import com.wenhao.serviceedu.service.CourseService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.wenhao.serviceedu.service.VideoService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,6 +35,12 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
     @Autowired
     private CourseDescriptionMapper courseDescriptionMapper;
 
+    @Autowired
+    private VideoService videoService;
+
+    @Autowired
+    private ChapterService chapterService;
+
     @Override
     public void pageQuery(Page<Course> pageParam, CourseQuery courseQuery) {
         QueryWrapper<Course> courseQueryWrapper = new QueryWrapper<>();
@@ -52,7 +60,6 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
         if (status != null) {
             courseQueryWrapper.eq("status",status);
         }
-
         courseMapper.selectMapsPage(pageParam, courseQueryWrapper);
     }
 
@@ -115,6 +122,19 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
 
         int i = courseMapper.updateById(course);
         return i == 1;
+    }
+
+    @Override
+    public boolean removeCourseById(String id) {
+        videoService.removeByCourseId(id);
+
+        chapterService.removeByCourseId(id);
+
+        courseDescriptionMapper.deleteById(id);
+
+        Integer result = courseMapper.deleteById(id);
+
+        return null != result && result > 0;
     }
 
     public CoursePublishVo getCoursePublishVoById(String id){
