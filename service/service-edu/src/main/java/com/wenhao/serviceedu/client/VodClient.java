@@ -18,7 +18,6 @@ import java.util.List;
  * @create 2021-05-05 14:57
  */
 @FeignClient(value = "service-vod")
-@Component
 public interface VodClient {
 
     @SentinelResource("removeVideo")

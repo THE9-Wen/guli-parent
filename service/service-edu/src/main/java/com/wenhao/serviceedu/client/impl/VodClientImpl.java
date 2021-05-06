@@ -11,7 +11,6 @@ import java.util.List;
  * @Description
  * @create 2021-05-05 21:14
  */
-@Component
 public class VodClientImpl implements VodClient {
     @Override
     public R removeVideo(String videoId) {

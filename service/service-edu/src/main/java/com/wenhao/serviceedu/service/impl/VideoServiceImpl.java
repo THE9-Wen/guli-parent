@@ -30,7 +30,7 @@ public class VideoServiceImpl extends ServiceImpl<VideoMapper, Video> implements
     @Autowired
     private VideoMapper videoMapper;
 
-    @Resource
+    @Autowired
     @Lazy
     private VodClient vodClient;
 

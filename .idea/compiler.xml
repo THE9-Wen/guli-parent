@@ -10,6 +10,7 @@
         <module name="common-util" />
         <module name="service-oss" />
         <module name="service-edu" />
+        <module name="service-cms" />
         <module name="common-base" />
         <module name="service-vod" />
       </profile>
